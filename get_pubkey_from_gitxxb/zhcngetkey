@@ -1,0 +1,6 @@
+#!/bin/bash
+
+read -p "USERNAME:" USERNAME
+curl https://hub.fastgit.xyz/${USERNAME}.keys | while read key; do
+  echo "$USERNAME $key" >> allowed_signers.githubz
+done

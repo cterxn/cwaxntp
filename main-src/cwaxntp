@@ -1,0 +1,76 @@
+#!/bin/bash
+set +o posix
+. ../functions/*.sh --source-only
+
+trap "echo 'ERROR:Please check and report it by issue'" ERR
+
+while [[ $# -gt 0 ]]
+do
+case $1 in 
+#	--encrypt-output | -t | eoput | --encrypt-output-to-file | -A )
+#	SignFileName="$2"
+#	OutputFileName="$3"
+#	InputFileName="$4"
+#	age --encrypt -R $2 --output $3 $4
+#	shift
+#	;;
+	--encrypt | --encrtp | -e | encrypt | ept | -B )
+	SignFileName="$2"
+	InputFileName="$3"
+	age --encrypt -R $2 -a $3
+	shift
+	;;
+	--decrypt | -d | de | det | decry | decrypt | -C )
+	PrivateSignFileName="$2"
+        InputFileName="$3"
+	age --decrypt -i $2 $3
+	shift
+	;;
+	--ssh-keygen | --keygen | -k | --sk | --s-k | keygen | ssh-keygen | -D )
+#	emmmFILE="$2"
+        PrivateSignFileName="$2"
+	InputFileName="$3"
+	ssh-keygen -Y sign -n file -f $2 $3
+	shift
+	;;
+	-y | --verify | ver | verify | -E )
+#	SignedFileName="$2"
+#	WhoseName="$3"
+#	InputRawFileName="$3"
+#	emmmFILE="$5"
+#	WhosePublicKey="$2"
+#	cat $4 | ssh-keygen -Y verify -n $5 -f (echo $3 `cat $6` ) -I $3 -s $2
+#	export F=`echo "$(ssh-keygen -l -f $2 | cut -d' ' -f3) $(cat $2)"`
+#	export I=$(ssh-keygen -l -f $2 | cut -d' ' -f3)
+#	echo $F
+#	echo $I
+#	ssh-keygen -Y verify -n file -f =$F -I $I -s $4
+#<&	};
+#	cat $3 | ssh-keygen -Y verify -n file -f =$F -I $I -s $2 $3
+	echo "Plases waiting..."
+	sleep 3s
+	echo "Doing......"
+	exit 0
+#	allowed_signers=$2
+#	file_to_verify=$4
+#	cat $5 | ssh-keygen -Y verify -f $allowed_signers -I $3 -n file -s ${file_to_verify}.sig
+	shift
+	;;
+#	--encrypt-output | --encrtpout | -t | encrypout | eoput | -F )
+#        SignFileName="$2"
+#        InputFileName="$3"
+#	OutputFileName="$4"
+#        age --encrypt -R $2 -a $3 |  tee -a $4                                                            shift                                                                                  ;;
+	*)
+#	echo "Error: "
+#	echo "      Unknow Options -> $1"
+#	echo ""
+#	echo "<<<Usage:"
+#	echo "        sh demo.sh [-test base_test] [-n 10] [-o ./OUT] [-seed 123] [-tool vcs]"
+	exit 0
+	;;
+esac
+shift
+done
+
+

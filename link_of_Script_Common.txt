@@ -1,0 +1,3 @@
+https://gitlab.com/bertrand-benoit/scripts-common
+
+GPLv3. So it is not used in this software. May be used in the (possibly existing) GPLv3 version

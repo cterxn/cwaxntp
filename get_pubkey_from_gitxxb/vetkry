@@ -1,0 +1,6 @@
+#!/bin/bash
+
+read -p "USERNAME:" USERNAME
+curl https://github.com/${USERNAME}.keys | while read key; do
+  echo "$USERNAME $key" >> allowed_signers.github
+done

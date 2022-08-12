@@ -1,0 +1,47 @@
+#!/bin/bash
+set +o posix
+
+. ../functions/*.sh --source-only
+
+trap "echo 'ERROR:MAYBE CONFIG FILE NOT FOUND'" ERR
+
+while [[ $# -gt 0 ]]
+do
+wt=`sed --quiet '/^WebsiteType=/!d;s/.*=//' $2 2>/dev/null` 
+wa=`sed --quiet '/^WebsitAaddress=/!d;s/.*=//' $2 2>/dev/null` &&
+wmt=`sed --quiet '/^WebsiteMirrorType=/!d;s/.*=//' $2 2>/dev/null` &&
+wma=`sed --quiet '/^WebsiteMirrorAddress=/!d;s/.*=//' $2 2>/dev/null` && 
+#if 566 -eq $4;then
+#echo $wt
+#echo $wa
+#echo $wmt
+#echo $wma
+echo Print $2  
+cat $2 2>/dev/null || exit 1
+echo "------------------"
+#fi
+
+USERNAME=$3
+case $1 in
+	-m)
+	curl ${wma}/${USERNAME}.keys | while read key; do
+	  echo "$USERNAME $key" >> allowed_signers.${wmt}
+	done
+	shift
+	;;
+	-n)
+	curl ${wa}/${USERNAME}.keys | while read key; do
+	  echo "$USERNAME $key" >> allowed_signers.${wt}
+	done
+	shift
+	;;
+	*)
+#	echo "Error!"
+#	exit 1
+	error_exit "Arguments error!"
+;;
+esac
+shift
+exit 0
+done
+#exit 0
